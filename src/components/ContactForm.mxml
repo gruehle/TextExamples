@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					  xmlns:s="library://ns.adobe.com/flex/spark" 
+					  width="400" height="238"
+					  contentBackgroundColor="#FFFFFF">
+	<fx:Script>
+		<![CDATA[
+			private function submitInfo():void
+			{
+				// Clear stage.focus to ensure the keyboard is closed
+				stage.focus = null;
+				
+				// Dispatch a complete event
+				dispatchEvent(new Event(Event.COMPLETE));
+			}
+		]]>
+	</fx:Script>
+	<fx:Metadata>
+		[Event(name="complete", type="flash.events.Event")]
+	</fx:Metadata>
+	<s:RectangularDropShadow width="100%" height="100%" angle="90" blurX="10" blurY="10" tlRadius="12" trRadius="12" blRadius="12" brRadius="12" />
+	<s:Rect width="100%" height="100%" radiusX="12">
+		<s:fill>
+			<s:SolidColor color="0xE8E8E8" />
+		</s:fill>
+	</s:Rect>
+	<s:Scroller left="10" top="10" right="10" bottom="10">
+		<s:VGroup gap="15" paddingLeft="3" paddingTop="3" paddingRight="3" paddingBottom="3">
+			<s:Group>	
+				<s:Label top="1" fontSize="24" color="0xFFFFFF" text="Contact information:"/>
+				<s:Label fontSize="24" color="0x444444" text="Contact information:"/>
+			</s:Group>
+			
+			<!-- These text controls are inside a Scroller, so they must use the TextField-based skins. 
+			     The skins are set in the TextExamples.css file. -->
+			<s:TextInput id="firstName" width="100%" prompt="First Name" enter="lastName.setFocus()" />
+			<s:TextInput id="lastName" width="100%" prompt="Last Name" enter="company.setFocus()" />
+			<s:TextInput id="company" width="100%" prompt="Company" enter="email.setFocus()" />
+			<s:TextInput id="email" width="100%" prompt="Email" enter="homePhone.setFocus()" />
+			<s:TextInput id="homePhone" width="100%" prompt="Home Phone" enter="businessPhone.setFocus()" />
+			<s:TextInput id="businessPhone" width="100%" prompt="Business Phone" enter="mobilePhone.setFocus()" />
+			<s:TextInput id="mobilePhone" width="100%" prompt="Mobile Phone" enter="comments.setFocus()" />
+			<s:TextArea id="comments" width="100%" minHeight="200" prompt="Comments" />
+		</s:VGroup>
+	</s:Scroller>
+</s:SkinnableContainer>

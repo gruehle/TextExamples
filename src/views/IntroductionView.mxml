@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="Introduction">
+	
+	<fx:Script>
+		<![CDATA[
+			import flash.net.navigateToURL;
+			protected function openLink(event:MouseEvent):void
+			{
+				navigateToURL(new URLRequest(event.target.text));
+			}
+		]]>
+	</fx:Script>
+	
+	
+	<s:states>
+		<s:State name="landscape" />
+		<s:State name="portrait" />
+	</s:states>
+	<s:Scroller left="15" top="15" right="15" bottom="15">
+		<s:VGroup gap="15">
+			<s:Label styleName="heading" text="Overview" />
+			<s:Label width="100%">
+				<fx:String>This application demonstrates the text components that are available for Flex 4.6 mobile projects. </fx:String>
+			</s:Label>
+			<s:Label width="100%" text="The source for this application can be downloaded from:" />
+			<s:Label width="100%" styleName="link" text="http://github.com/gruehle/TextExamples" click="openLink(event)" />
+			<s:Label styleName="heading" text="How To Use" />
+			<s:Label width="100%">
+				<s:text.landscape>Select an item from the list on the left. Each example has information about best practices and items to take into consideration.</s:text.landscape>
+				<s:text.portrait>Click the "Contents" button above and select an item from the list. Each example has information about best practices and items to take into consideration.</s:text.portrait>
+			</s:Label>
+			<s:Label styleName="heading" text="Text Components" />
+			<s:Label width="100%">
+				<fx:String>The following text components are recommended for use in mobile projects:</fx:String>
+			</s:Label>
+			<s:VGroup gap="15" paddingLeft="30" width="100%">
+				<s:Label styleName="heading" text="Label" />
+				<s:Label width="100%">
+					<fx:String>The Label component is used for read-only text. The text can span multiple lines - for example, all of the text on this page is displayed in Labels.</fx:String>
+				</s:Label>
+				<s:Label styleName="heading" text="Text Input" />
+				<s:Label width="100%">
+					<fx:String>The TextInput component is used for single-line text input. New for Flex 4.6 is support for soft keyboard type (numeric, email, etc.), return key label ("Next", "Go", "Search", etc.), and auto-capitalization.</fx:String>
+				</s:Label>
+				<s:Label styleName="heading" text="Text Area" />
+				<s:Label width="100%">
+					<fx:String>The TextArea component is used for display or editing of multi-line text. The TextArea component supports all of the new features of TextInput.</fx:String>
+				</s:Label>
+				<s:Label styleName="heading" text="StyleableTextField" />
+				<s:Label width="100%">
+					<fx:String>The StyleableTextField component is used in ActionScript item renderers and skins. It is a wrapper for the Flash TextField class that support editing and selection. You can use the htmlText property of StyleableTextField to work with basic HTML formatted text.</fx:String>
+				</s:Label>
+				<s:Label styleName="heading" text="StageWebView" />
+				<s:Label width="100%">
+					<fx:String>The StageWebView component is a full web browser view that can be included in your application.</fx:String>
+				</s:Label>
+			</s:VGroup>
+		</s:VGroup>	
+	</s:Scroller>
+</s:View>

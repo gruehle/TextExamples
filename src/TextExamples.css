@@ -1,0 +1,42 @@
+@namespace s "library://ns.adobe.com/flex/spark";
+
+s|ActionBar {
+	chrome-color: #336699;
+}
+
+.heading {
+	font-size: 20;
+	font-weight: bold;
+	padding-top: 10;
+}
+
+.link {
+	color: #3366CC;
+	text-decoration: underline;
+}
+
+.result {
+	color: #CC6633;
+	font-style: italic;
+}
+
+/* For Text components inside a Scroller, you need to use the old 
+/  TextField-based skins. These selectors take care of that. 
+*/
+s|Scroller s|TextInput {
+	skinClass: ClassReference("spark.skins.mobile.TextInputSkin");
+}
+
+s|Scroller s|TextArea {
+	skinClass: ClassReference("spark.skins.mobile.TextAreaSkin");
+}
+
+/* Use beveled buttons on iOS */
+@media (os-platform:"IOS") {
+	s|ActionBar {
+		defaultButtonAppearance: beveled;
+	}
+	s|ActionBar.beveled s|Group#navigationGroup s|Button {
+		skinClass: ClassReference("spark.skins.mobile.BeveledActionButtonSkin");
+	}
+}

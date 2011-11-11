@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="Text Form" 
+		xmlns:components="components.*"
+		viewActivate="form.first.setFocus()">
+
+	<!-- The viewActivate event is called once the view has been fully transitioned into place.
+	     We want to set focus to the "first name" field so the user can start typing immediately
+		 without having to tap the field first. -->
+	
+	
+	<fx:Script>
+		<![CDATA[
+			protected function completeHandler(event:Event):void
+			{
+				result.text = "You entered: " + form.first.text + ", " + form.last.text + ", " + form.email.text + ", " + form.phone.text;
+			}
+		]]>
+	</fx:Script>
+	
+	
+	<components:LoginForm id="form" horizontalCenter="0" top="20" complete="completeHandler(event)"/>
+	<s:VGroup left="30" right="30" top="275" gap="10">		
+		<s:Label id="result" styleName="result" width="100%" textAlign="center" height="30" />
+		<s:Label styleName="heading" text="Instructions:"/>
+		<s:Label width="100%"
+				 text="Enter text into the fields. Note that the keyboard changes for the email and phone fields, and the auto-capitalization rules are different for the name fields.&#xd;&#xd;To navigate between fields, you can tap on the next field, tap the return key (which will display a &quot;Next&quot; label, if possible), or tap the Tab key. The information is submitted after the phone field is filled out or the Submit button is tapped."/>
+		<s:Label styleName="heading" text="Notes:"/>
+		<s:Label width="100%"
+				 text="1. On Android, the last text input will only dispatch an enter event if the returnKeyLabel is &quot;go&quot; or &quot;search&quot;. &#xd;3. When the returnKeyLabel is &quot;go&quot;, the keyboard will not close when the return key is hit. To close the keyboard, set stage.focus to null.&#xd;4. Tab key navigation works on device, but does not work when running on the desktop."/>
+	</s:VGroup>
+</s:View>

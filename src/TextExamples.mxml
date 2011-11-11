@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   initialize="initializeHandler(event)"
+			   resize="resizeHandler(event)"
+			   applicationDPI="160"
+			   splashScreenImage="@Embed('assets/splash.png')">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			import mx.events.ResizeEvent;
+			import mx.managers.SystemManager;
+			
+			protected function resizeHandler(event:ResizeEvent):void
+			{
+				if (currentState == "phone")
+					return;
+				
+				currentState = aspectRatio;
+			}
+			
+			// Returns the size of the screen, in inches
+			private function get screenSize():Number
+			{
+				var w:Number = systemManager.stage.stageWidth;
+				var h:Number = systemManager.stage.stageHeight;
+				
+				return Math.sqrt((w * w) + (h * h)) / Capabilities.screenDPI;
+			}
+			
+			protected function initializeHandler(event:FlexEvent):void
+			{
+				if (screenSize < 5.0)
+				{
+					currentState = "phone";
+					return;
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Style source="TextExamples.css" />
+	
+	<s:states>
+		<s:State name="portrait" stateGroups="tablet" />
+		<s:State name="landscape" stateGroups="tablet" />
+		<s:State name="phone" />
+	</s:states>
+	
+	<s:SplitViewNavigator includeIn="tablet" id="svn" width="100%" height="100%" autoHideFirstViewNavigator="true">
+		<s:ViewNavigator width="350" height="100%" firstView="views.ContentsView" />
+		<s:ViewNavigator id="mainNavigator" width="100%" height="100%" firstView="views.IntroductionView">
+			<s:navigationContent.portrait>
+				<s:Button id="b" label="Contents" click="svn.showFirstViewNavigatorInPopUp(b);" />
+			</s:navigationContent.portrait>
+		</s:ViewNavigator>
+	</s:SplitViewNavigator>
+	<s:Label includeIn="phone" left="10" right="10" top="10" bottom="10" 
+			 fontSize="24" text="Sorry, this application only runs on tablets." />
+</s:Application>

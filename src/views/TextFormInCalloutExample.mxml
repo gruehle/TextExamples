@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="Text Form in Callout" xmlns:components="components.*">
+	
+	<fx:Script>
+		<![CDATA[
+			private function completeHandler():void
+			{
+				// Grab the data before closing the callout
+				result.text = "You entered: " + form.first.text + ", " + form.last.text + ", " + form.email.text + ", " + form.phone.text;
+				cb.closeDropDown();
+			}
+		]]>
+	</fx:Script>
+	<s:actionContent>
+		<s:CalloutButton id="cb" label="My Info" verticalPosition="after" open="form.first.setFocus()">
+			<components:LoginForm id="form" complete="completeHandler()" />
+		</s:CalloutButton>
+	</s:actionContent>
+	
+	<s:VGroup left="30" right="30" top="30" gap="10">		
+		<s:Label id="result" styleName="result" width="100%" textAlign="center" height="30" />
+		<s:Label styleName="heading" text="Instructions:"/>
+		<s:Label width="100%"
+				 text="Click the &quot;My Info&quot; button to open a text form inside a Callout. This form behaves the same as the &quot;Text Form&quot; example."/>
+		<s:Label styleName="heading" text="Notes:"/>
+		<s:Label width="100%"
+				 text="When a pop up control is open, any text in the app that is not in the pop up (or in the owner of the pop up) cannot be edited."/>
+	</s:VGroup>
+</s:View>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="Contents">
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayList;
+			import mx.core.FlexGlobals;
+			import mx.core.UIComponent;
+			
+			import spark.events.IndexChangeEvent;
+			
+			protected function changeHandler(event:IndexChangeEvent):void
+			{
+				FlexGlobals.topLevelApplication.mainNavigator.pushView(exampleList.selectedItem.view);
+				FlexGlobals.topLevelApplication.svn.hideViewNavigatorPopUp();
+			}
+			
+			[Bindable]
+			public var exampleData:ArrayList = new ArrayList([
+				{name:"Introduction", view:views.IntroductionView},
+				{name:"Text Form", view:views.TextFormExample},
+				{name:"Text Form in Callout", view:views.TextFormInCalloutExample},
+				{name:"Long Text", view:views.LongTextExample},
+				{name:"Scrolling Text Form", view:views.ScrollingTextFormExample},
+				{name:"HTML Text in a StageWebView", view:views.StageWebViewExample}
+			]);
+		]]>
+	</fx:Script>
+	<s:List id="exampleList" width="100%" height="100%" dataProvider="{exampleData}" labelField="name" change="changeHandler(event)">
+		
+	</s:List>
+</s:View>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="Long Text"
+		initialize="initHandler(event)"
+		viewActivate="FlexGlobals.topLevelApplication.resizeForSoftKeyboard=true;"
+		viewDeactivate="FlexGlobals.topLevelApplication.resizeForSoftKeyboard=false;">
+	
+	<fx:Script>
+		<![CDATA[
+			import components.EmbeddedText;
+			
+			import mx.core.FlexGlobals;
+			import mx.events.FlexEvent;
+			
+			protected function initHandler(event:FlexEvent):void
+			{
+				var embText:EmbeddedText = new EmbeddedText();
+				
+				textArea.text += embText.toString();
+			}
+			
+			protected function editButton_clickHandler(event:MouseEvent):void
+			{
+				textArea.editable = !textArea.editable;
+				editButton.label = textArea.editable ? "Done" : "Edit";
+				if (textArea.editable) 
+				{
+					// Call validateNow() on the textArea to commit the editing state. This
+					// needs to be done in order for setFocus() to work.
+					textArea.validateNow();
+					textArea.setFocus();
+				}
+			}
+		]]>
+	</fx:Script>
+	<s:actionContent>
+		<s:Button label="Edit" id="editButton" click="editButton_clickHandler(event)" />
+	</s:actionContent>
+	
+	<s:TextArea id="textArea" editable="false" selectable="false" 
+				left="15" right="15" top="15" bottom="15" 
+				borderVisible="false" contentBackgroundColor="#FFFFFF">
+		<s:text><![CDATA[This is an example of a TextArea with a large amount of text. The TextArea has editable=false, allowing the user to easily scroll through and read the text. Click the "Edit" button to enable editing, and click the "Done" button when finished editing. This technique works consistently on all platforms.
+			
+This TextArea component uses constraints for sizing, making it fill the available space on the screen. Additionally, this view sets resizeForSoftKeyboard=true upon activation. This makes the app resize when the on-screen keyboard is shown, and the size of this text area changes to accomodate the keyboard.
+			
+The rest of the text is filler to demonstrate functionality with long text.
+
+			
+			
+-----------------------------------------------
+			
+	
+			
+			
+]]></s:text>
+	</s:TextArea>
+</s:View>

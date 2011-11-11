@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		viewActivate="createStageWebView()"
+		viewDeactivate="destroyStageWebView()"
+		resize="updateStageWebViewViewPort()"
+		title="HTML Text in a StageWebView">
+	<fx:Script>
+		<![CDATA[
+			import components.EmbeddedHTML;
+			
+			import mx.events.FlexEvent;
+			
+			import spark.primitives.BitmapImage;
+			
+			private var stageWebView:StageWebView;
+			private var bitmap:BitmapImage;
+			
+			private static const WEB_VIEW_MARGIN:int = 10;
+			
+			private function createStageWebView():void
+			{
+				stageWebView = new StageWebView();
+				stageWebView.stage = systemManager.stage;
+				stageWebView.loadString((new EmbeddedHTML()).toString());
+				updateStageWebViewViewPort();
+				
+				stageWebView.addEventListener(LocationChangeEvent.LOCATION_CHANGING, stageWebView_locationChangingEvent);
+				focusManager.addEventListener(FlexEvent.FLEX_WINDOW_ACTIVATE, windowActivateHandler);
+				focusManager.addEventListener(FlexEvent.FLEX_WINDOW_DEACTIVATE, windowDeactivateHandler);
+			}
+			
+			private function destroyStageWebView():void
+			{
+				stageWebView.removeEventListener(LocationChangeEvent.LOCATION_CHANGING, stageWebView_locationChangingEvent);
+				focusManager.removeEventListener(FlexEvent.FLEX_WINDOW_ACTIVATE, windowActivateHandler);
+				focusManager.removeEventListener(FlexEvent.FLEX_WINDOW_DEACTIVATE, windowDeactivateHandler);
+				
+				stageWebView.stage = null;
+				stageWebView = null;
+			}
+			
+			private function updateStageWebViewViewPort():void
+			{
+				if (!stageWebView)
+					return;
+				
+				var topLeft:Point = new Point(WEB_VIEW_MARGIN, WEB_VIEW_MARGIN);
+				
+				topLeft = localToGlobal(topLeft);
+				stageWebView.viewPort = new Rectangle(topLeft.x, topLeft.y,
+					width - (WEB_VIEW_MARGIN*2), height - (WEB_VIEW_MARGIN*2));
+			}
+			
+			private function stageWebView_locationChangingEvent(event:LocationChangeEvent):void
+			{
+				// Links in the content are relative to the original article on the Adobe Dev Center,
+				// so they don't work here. Call preventDefault to stop the links from changing the 
+				// location.
+				event.preventDefault();
+			}
+
+			private function windowActivateHandler(event:Event):void
+			{
+				if (bitmap)
+				{
+					stageWebView.stage = systemManager.stage;
+					// To avoid a flicker, use call later to hide the bitmap
+					callLater(hideBitmap);
+				}
+			}
+			
+			private function hideBitmap():void
+			{
+				removeElement(bitmap);
+				bitmap = null;
+			}
+			
+			private function windowDeactivateHandler(event:Event):void
+			{
+				var viewport:Rectangle = stageWebView.viewPort;
+				var bitmapData:BitmapData = new BitmapData(viewport.width, viewport.height, false, 0xFFFFFF);
+				
+				stageWebView.drawViewPortToBitmapData(bitmapData);
+				if (!bitmap)
+				{
+					bitmap = new BitmapImage();
+					bitmap.left = WEB_VIEW_MARGIN;
+					bitmap.top = WEB_VIEW_MARGIN;
+					addElement(bitmap);
+				}
+				bitmap.source = bitmapData;
+				
+				// To avoid a flicker, use call later to hide the stage web view
+				callLater(hideStageWebView);
+			}
+			
+			private function hideStageWebView():void
+			{
+				stageWebView.stage = null;
+			}
+		]]>
+	</fx:Script>
+</s:View>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		xmlns:components="components.*"
+		title="Scrolling Text Form">
+	
+	<components:ContactForm horizontalCenter="0" top="15" />
+
+	<s:VGroup left="30" right="30" top="275" gap="10">		
+		<s:Label styleName="heading" text="Instructions:"/>
+		<s:Label width="100%"
+				 text="If you need to put text inside a Scroller, you must use the TextField-based skins. This application has style rules that change the skinClass for TextInput and TextArea components that are inside a scroller."/>
+		<s:Label styleName="heading" text="Notes:"/>
+		<s:Label width="100%"
+				 text="1. Text inside a Scroller does not work correctly on iOS - the focused text compenent will not scroll, and does not honor any clipping. &#xd;2. The TextInput-based skins do not support the returnKeyLabel, autoCapitalization and softKeyboardType properties. They are ignored."/>
+	</s:VGroup>
+
+</s:View>
